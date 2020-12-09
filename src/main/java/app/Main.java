@@ -25,7 +25,7 @@ public class Main {
             JLabel chunkLineSizeLabel           = new JLabel("Anzahl der Zeilen pro Chunk: ");
             JTextField chunkLineSizeField       = new JTextField("100", 5);
 
-            final String[] csvFilePath = {""};
+            final String[] csvFilePath = new String[2];
 
             openFileButton.addActionListener(new ActionListener() {
                 @Override
@@ -34,6 +34,7 @@ public class Main {
                     int opend = csvFileDialog.showOpenDialog(null);
                     if (opend == JFileChooser.APPROVE_OPTION) {
                         csvFilePath[0] = csvFileDialog.getSelectedFile().getAbsolutePath();
+                        csvFilePath[1] = csvFileDialog.getSelectedFile().getName();
                         openFileLocationField.setText(csvFilePath[0]);
                     }
                 }
@@ -42,7 +43,11 @@ public class Main {
             chunkCsvButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    CsvHandler.chunkCsv(csvFilePath[0], chunkLineSizeField.getText());
+                    if (CsvHandler.chunkCsv(csvFilePath[0], chunkLineSizeField.getText(), csvFilePath[1])) {
+                        JOptionPane.showMessageDialog(null, "Ausgangs Csv Datei erfolgreich verkleinert.", "Erfolg", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Es gab beim verkleinern einen Fehler. Operation nicht erfolgreich.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             });
 

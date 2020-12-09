@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class CsvHandler {
     private static final String CSV_BASENAME = "CHUNK-";
 
-    public static void chunkCsv(String path, String chunkLinesPerFile) {
+    public static boolean chunkCsv(String path, String chunkLinesPerFile, String originalFilename) {
         try {
             Reader in                   = new FileReader(path);
             Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
@@ -26,7 +26,7 @@ public class CsvHandler {
             int i                       = 0;
             int chunkFileId             = 0;
             int chunkSize               = Integer.parseInt(chunkLinesPerFile);
-            BufferedWriter csvWriter    = new BufferedWriter(new FileWriter(CSV_BASENAME + Integer.toString(chunkFileId) + ".csv", true));
+            BufferedWriter csvWriter    = new BufferedWriter(new FileWriter(CSV_BASENAME + Integer.toString(chunkFileId) + "-" + originalFilename, true));
 
             for (String row : csvRows) {
                 csvWriter.append(row);
@@ -35,14 +35,16 @@ public class CsvHandler {
                     i = 0;
                     chunkFileId++;
                     csvWriter.close();
-                    csvWriter = new BufferedWriter(new FileWriter(CSV_BASENAME + Integer.toString(chunkFileId) + ".csv", true));
+                    csvWriter = new BufferedWriter(new FileWriter(CSV_BASENAME + Integer.toString(chunkFileId) + "-" + originalFilename, true));
                     csvWriter.append(header);
                 }
             }
             csvWriter.close();
+            return true;
 
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
     }
 }
