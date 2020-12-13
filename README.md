@@ -5,10 +5,13 @@ Verkleinert CSV Dateien in kleinere Häppchen.
 
 ## Benutzung
 Über den Button "CSV Auswählen" die CSV Datei auswählen, anschließend
-kann die Anzahl der Zeilen pro Chunk file festgelegt werden.
+den Speicherort auswählen, in denen die verkleinerten CSV Dateien abgelegt werden.
 
-Die verkleinerten CSV Dateiein sind dann im selben Ordner wie die .jar und
-und fangen mit der Präfix "chunk-", gefolgt von einer Id und dem Dateinamen an.
+### Einstellungen
+Es können zusätzliche Einstellungen definiert werden, u.a.
+- **Anzahl der Zeilen Pro Chunk:** Wie viele Zeilen jeder Chunk hat (Default bei 1000)
+- **Kopfzeile**: In Welcher Zeile sich der Header befindet (wird in jeden Chunk anschließend reingeschrieben)
+- **Präfix**: Mit welcher Prefix die Chunk Dateinamen beginnen sollen (Default ist "Chunk")
 
 ## Kompilieren
 Das Projekt ganz normal mit Maven bauen. Falls es aufgrund von Signed Jars zu
